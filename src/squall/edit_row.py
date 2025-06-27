@@ -89,15 +89,3 @@ class EditRowScreen(ModalScreen):
             )
         except sqlite3.OperationalError as e:
             self.app.push_screen(WarningScreen(f"[red]ERROR Committing data:[/] {e}"))
-
-
-# data = dict(
-# zip(
-# ("AlbumId", "Title", "ArtistId"),
-# [1, "For Those About To Rock We Salute You", 1],
-# )
-# )
-# table_name = "Album"
-# primary_keys = ("AlbumId",)
-# app = EditRowScreen(data, table_name, primary_keys, Path(r"C:\Chinook_Sqlite.sqlite"))
-# app.run()
