@@ -1,5 +1,7 @@
 # Squall SQLite Editor
 
+[![Framework: Textual](https://img.shields.io/badge/framework-Textual-5967FF?logo=python)](https://www.textualize.io/)
+
 Squall is a SQLite viewer and editor that runs in your terminal. Squall is written in Python and uses the [Textual package](https://github.com/Textualize/)
 
 ## Screenshots
