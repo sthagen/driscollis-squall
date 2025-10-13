@@ -18,7 +18,7 @@ def get_data_from_table(db_path: Path, table_name: str) -> list[tuple]:
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    sql = f"SELECT * FROM {table_name} LIMIT 1000;"
+    sql = f"SELECT * FROM {table_name};"
     cursor.execute(sql)
 
     # Get column names
