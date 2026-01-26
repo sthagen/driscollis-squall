@@ -53,7 +53,7 @@ class SQLiteClientApp(App):
         path = Path(self.args.filepath) if self.args.filepath else Path("BAD")
         if path and path.exists():
             db_path = path.absolute()
-            await self.db_parsing(db_path)  # type: ignore
+            self.db_parsing(db_path)  # type: ignore
 
     @on(Button.Pressed, "#open_db_btn")
     async def action_open_database(self) -> None:
