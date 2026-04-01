@@ -1,5 +1,7 @@
 # squall.py
 
+import sqlite3
+
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
 
@@ -95,12 +97,30 @@ class SQLiteClientApp(App):
             self.notify("BAD PATH")
             return
 
-        self.db_inspector = db_utility.get_db_inspector(db_file_path)
-        self.table_names = self.db_inspector.get_table_names()
-        self.table_names.sort()
-        self.db_schema = db_utility.get_schema(self.table_names, self.db_inspector)
-
-        self.call_from_thread(self.update_ui, db_file_path)  # type: ignore
+        try:
+            self.db_inspector = db_utility.get_db_inspector(db_file_path)
+            self.table_names = self.db_inspector.get_table_names()
+            self.table_names.sort()
+            self.db_schema = db_utility.get_schema(self.table_names, self.db_inspector)
+            self.call_from_thread(self.update_ui, db_file_path)  # type: ignore
+        except sqlite3.DatabaseError as e:
+            self.call_from_thread(
+                self.notify, "File is not a database", title="Error", severity="error"
+            )
+            self.log.error("Error opening database:")
+            self.log.error(e)
+        except sqlite3.OperationalError as e:
+            self.call_from_thread(
+                self.notify, "Unknown database type", title="Error", severity="error"
+            )
+            self.log.error("Error opening database:")
+            self.log.error(e)
+        except Exception as e:
+            self.call_from_thread(
+                self.notify, "Unable to open database", title="Error", severity="error"
+            )
+            self.log.error("Error opening database:")
+            self.log.error(e)
 
 
 def get_args() -> Namespace:
